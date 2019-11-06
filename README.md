@@ -60,3 +60,4 @@ The default setting are optimized for middle-scale clusters. You are free to inc
 > my SQL-based microservice is stuck during Liquibase initialization when running multiple replicas
 
 Sometimes the database changelog lock gets corrupted. You will need to connect to the database using `kubectl exec -it` and remove all lines of liquibases `databasechangeloglock` table.
+"# exampleSearch" 
