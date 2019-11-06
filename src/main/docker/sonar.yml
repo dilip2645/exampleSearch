@@ -1,0 +1,7 @@
+version: '2'
+services:
+  examplesearch-sonar:
+    image: sonarqube:7.9.1-community
+    ports:
+      - 9000:9000
+      - 9092:9092

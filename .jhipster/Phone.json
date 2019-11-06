@@ -1,0 +1,36 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "model",
+            "fieldType": "String"
+            
+        },
+        {
+            "fieldName": "company",
+            "fieldType": "String"
+            
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+            
+        },
+        {
+            "fieldName": "memory",
+            "fieldType": "Integer",
+            "fieldValidateRules": []
+            
+        }
+    ],
+    "changelogDate": "20190828121409",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "no",
+    "entityTableName": "phone",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

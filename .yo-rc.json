@@ -1,0 +1,51 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.example.search"
+    },
+    "jhipsterVersion": "6.2.0",
+    "applicationType": "monolith",
+    "baseName": "exampleSearch",
+    "packageName": "com.example.search",
+    "packageFolder": "com/example/search",
+    "serverPort": "8080",
+    "authenticationType": "session",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "rememberMeKey": "f0ee48a9affee60fb08ec4396fc53e0acf673834bec378c77d8d51bdc2faf88e752cadbb7d3113651a4e60b0b4eedc0c80ce",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "pulse",
+    "clientThemeVariant": "light",
+    "testFrameworks": [
+      "gatling"
+    ],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": [],
+    "appsFolders": [
+      "exampleSearch"
+    ],
+    "directoryPath": "../",
+    "jwtSecretKey": "NzIxYmM4NDczZTBjYmZjN2EzMDVlYmJiNzIxZTBlOTNlOGNhOGI4ZmNlNDNiZDc2ZTk5NzBmYzZhZDkyZTQ1ZDI3ZDA1N2U3NTMzMzBhYzlkMDFjZDk1MDUxZWU3ZDI5ODQ3NQ==",
+    "dockerRepositoryName": "02645",
+    "dockerPushCommand": "docker push",
+    "kubernetesNamespace": "default",
+    "kubernetesServiceType": "LoadBalancer",
+    "ingressDomain": "",
+    "monitoring": "no",
+    "istio": false
+  }
+}

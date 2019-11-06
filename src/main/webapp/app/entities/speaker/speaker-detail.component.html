@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="speaker">
+            <h2><span>Speaker</span> {{speaker.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Company</span></dt>
+                <dd>
+                    <span>{{speaker.company}}</span>
+                </dd>
+                <dt><span>Model</span></dt>
+                <dd>
+                    <span>{{speaker.model}}</span>
+                </dd>
+                <dt><span>Water Proof</span></dt>
+                <dd>
+                    <span>{{speaker.waterProof}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/speaker', speaker.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
