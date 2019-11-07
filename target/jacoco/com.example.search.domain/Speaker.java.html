@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Speaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Example Search</a> &gt; <a href="index.source.html" class="el_package">com.example.search.domain</a> &gt; <span class="el_source">Speaker.java</span></div><h1>Speaker.java</h1><pre class="source lang-java linenums">package com.example.search.domain;
+
+import javax.persistence.*;
+
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import java.io.Serializable;
+
+/**
+ * A Speaker.
+ */
+@Entity
+@Table(name = &quot;speaker&quot;)
+@org.springframework.data.elasticsearch.annotations.Document(indexName = &quot;speaker&quot;)
+<span class="nc" id="L14">public class Speaker implements Serializable {</span>
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
+    private Long id;
+
+    @Column(name = &quot;company&quot;)
+    private String company;
+
+    @Column(name = &quot;model&quot;)
+    private String model;
+
+    @Column(name = &quot;water_proof&quot;)
+    private String waterProof;
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Long getId() {
+<span class="nc" id="L34">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L38">        this.id = id;</span>
+<span class="nc" id="L39">    }</span>
+
+    public String getCompany() {
+<span class="nc" id="L42">        return company;</span>
+    }
+
+    public Speaker company(String company) {
+<span class="nc" id="L46">        this.company = company;</span>
+<span class="nc" id="L47">        return this;</span>
+    }
+
+    public void setCompany(String company) {
+<span class="nc" id="L51">        this.company = company;</span>
+<span class="nc" id="L52">    }</span>
+
+    public String getModel() {
+<span class="nc" id="L55">        return model;</span>
+    }
+
+    public Speaker model(String model) {
+<span class="nc" id="L59">        this.model = model;</span>
+<span class="nc" id="L60">        return this;</span>
+    }
+
+    public void setModel(String model) {
+<span class="nc" id="L64">        this.model = model;</span>
+<span class="nc" id="L65">    }</span>
+
+    public String getWaterProof() {
+<span class="nc" id="L68">        return waterProof;</span>
+    }
+
+    public Speaker waterProof(String waterProof) {
+<span class="nc" id="L72">        this.waterProof = waterProof;</span>
+<span class="nc" id="L73">        return this;</span>
+    }
+
+    public void setWaterProof(String waterProof) {
+<span class="nc" id="L77">        this.waterProof = waterProof;</span>
+<span class="nc" id="L78">    }</span>
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L84">            return true;</span>
+        }
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (!(o instanceof Speaker)) {</span>
+<span class="nc" id="L87">            return false;</span>
+        }
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        return id != null &amp;&amp; id.equals(((Speaker) o).id);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L94">        return 31;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L99">        return &quot;Speaker{&quot; +</span>
+<span class="nc" id="L100">            &quot;id=&quot; + getId() +</span>
+<span class="nc" id="L101">            &quot;, company='&quot; + getCompany() + &quot;'&quot; +</span>
+<span class="nc" id="L102">            &quot;, model='&quot; + getModel() + &quot;'&quot; +</span>
+<span class="nc" id="L103">            &quot;, waterProof='&quot; + getWaterProof() + &quot;'&quot; +</span>
+            &quot;}&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

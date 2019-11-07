@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Phone.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Example Search</a> &gt; <a href="index.source.html" class="el_package">com.example.search.domain</a> &gt; <span class="el_source">Phone.java</span></div><h1>Phone.java</h1><pre class="source lang-java linenums">package com.example.search.domain;
+
+import javax.persistence.*;
+
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import java.io.Serializable;
+
+/**
+ * A Phone.
+ */
+@Entity
+@Table(name = &quot;phone&quot;)
+@org.springframework.data.elasticsearch.annotations.Document(indexName = &quot;phone&quot;)
+<span class="nc" id="L15">public class Phone implements Serializable {</span>
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @Field(type = FieldType.Keyword)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
+    private Long id;
+
+    @Column(name = &quot;model&quot;)
+    private String model;
+
+    @Column(name = &quot;company&quot;)
+    private String company;
+
+    @Column(name = &quot;price&quot;)
+    private Double price;
+
+    @Column(name = &quot;memory&quot;)
+    private Integer memory;
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Long getId() {
+<span class="nc" id="L39">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L43">        this.id = id;</span>
+<span class="nc" id="L44">    }</span>
+
+    public String getModel() {
+<span class="nc" id="L47">        return model;</span>
+    }
+
+    public Phone model(String model) {
+<span class="nc" id="L51">        this.model = model;</span>
+<span class="nc" id="L52">        return this;</span>
+    }
+
+    public void setModel(String model) {
+<span class="nc" id="L56">        this.model = model;</span>
+<span class="nc" id="L57">    }</span>
+
+    public String getCompany() {
+<span class="nc" id="L60">        return company;</span>
+    }
+
+    public Phone company(String company) {
+<span class="nc" id="L64">        this.company = company;</span>
+<span class="nc" id="L65">        return this;</span>
+    }
+
+    public void setCompany(String company) {
+<span class="nc" id="L69">        this.company = company;</span>
+<span class="nc" id="L70">    }</span>
+
+    public Double getPrice() {
+<span class="nc" id="L73">        return price;</span>
+    }
+
+    public Phone price(Double price) {
+<span class="nc" id="L77">        this.price = price;</span>
+<span class="nc" id="L78">        return this;</span>
+    }
+
+    public void setPrice(Double price) {
+<span class="nc" id="L82">        this.price = price;</span>
+<span class="nc" id="L83">    }</span>
+
+    public Integer getMemory() {
+<span class="nc" id="L86">        return memory;</span>
+    }
+
+    public Phone memory(Integer memory) {
+<span class="nc" id="L90">        this.memory = memory;</span>
+<span class="nc" id="L91">        return this;</span>
+    }
+
+    public void setMemory(Integer memory) {
+<span class="nc" id="L95">        this.memory = memory;</span>
+<span class="nc" id="L96">    }</span>
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L102">            return true;</span>
+        }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (!(o instanceof Phone)) {</span>
+<span class="nc" id="L105">            return false;</span>
+        }
+<span class="nc bnc" id="L107" title="All 4 branches missed.">        return id != null &amp;&amp; id.equals(((Phone) o).id);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L112">        return 31;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L117">        return &quot;Phone{&quot; +</span>
+<span class="nc" id="L118">            &quot;id=&quot; + getId() +</span>
+<span class="nc" id="L119">            &quot;, model='&quot; + getModel() + &quot;'&quot; +</span>
+<span class="nc" id="L120">            &quot;, company='&quot; + getCompany() + &quot;'&quot; +</span>
+<span class="nc" id="L121">            &quot;, price=&quot; + getPrice() +</span>
+<span class="nc" id="L122">            &quot;, memory=&quot; + getMemory() +</span>
+            &quot;}&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

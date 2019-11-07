@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhoneResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Example Search</a> &gt; <a href="index.source.html" class="el_package">com.example.search.web.rest</a> &gt; <span class="el_source">PhoneResource.java</span></div><h1>PhoneResource.java</h1><pre class="source lang-java linenums">package com.example.search.web.rest;
+
+import com.example.search.domain.Phone;
+import com.example.search.repository.PhoneRepository;
+import com.example.search.repository.search.PhoneSearchRepository;
+import com.example.search.web.rest.errors.BadRequestAlertException;
+
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
+
+/**
+ * REST controller for managing {@link com.example.search.domain.Phone}.
+ */
+@RestController
+@RequestMapping(&quot;/api&quot;)
+public class PhoneResource {
+
+<span class="nc" id="L39">    private final Logger log = LoggerFactory.getLogger(PhoneResource.class);</span>
+
+    private static final String ENTITY_NAME = &quot;phone&quot;;
+
+    @Value(&quot;${jhipster.clientApp.name}&quot;)
+    private String applicationName;
+
+    private final PhoneRepository phoneRepository;
+
+    private final PhoneSearchRepository phoneSearchRepository;
+
+<span class="nc" id="L50">    public PhoneResource(PhoneRepository phoneRepository, PhoneSearchRepository phoneSearchRepository) {</span>
+<span class="nc" id="L51">        this.phoneRepository = phoneRepository;</span>
+<span class="nc" id="L52">        this.phoneSearchRepository = phoneSearchRepository;</span>
+<span class="nc" id="L53">    }</span>
+
+    /**
+     * {@code POST  /phones} : Create a new phone.
+     *
+     * @param phone the phone to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new phone, or with status {@code 400 (Bad Request)} if the phone has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping(&quot;/phones&quot;)
+    public ResponseEntity&lt;Phone&gt; createPhone(@RequestBody Phone phone) throws URISyntaxException {
+<span class="nc" id="L64">        log.debug(&quot;REST request to save Phone : {}&quot;, phone);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (phone.getId() != null) {</span>
+<span class="nc" id="L66">            throw new BadRequestAlertException(&quot;A new phone cannot already have an ID&quot;, ENTITY_NAME, &quot;idexists&quot;);</span>
+        }
+<span class="nc" id="L68">        Phone result = phoneRepository.save(phone);</span>
+<span class="nc" id="L69">        phoneSearchRepository.save(result);</span>
+<span class="nc" id="L70">        return ResponseEntity.created(new URI(&quot;/api/phones/&quot; + result.getId()))</span>
+<span class="nc" id="L71">            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))</span>
+<span class="nc" id="L72">            .body(result);</span>
+    }
+
+    /**
+     * {@code PUT  /phones} : Updates an existing phone.
+     *
+     * @param phone the phone to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated phone,
+     * or with status {@code 400 (Bad Request)} if the phone is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the phone couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping(&quot;/phones&quot;)
+    public ResponseEntity&lt;Phone&gt; updatePhone(@RequestBody Phone phone) throws URISyntaxException {
+<span class="nc" id="L86">        log.debug(&quot;REST request to update Phone : {}&quot;, phone);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (phone.getId() == null) {</span>
+<span class="nc" id="L88">            throw new BadRequestAlertException(&quot;Invalid id&quot;, ENTITY_NAME, &quot;idnull&quot;);</span>
+        }
+<span class="nc" id="L90">        Phone result = phoneRepository.save(phone);</span>
+<span class="nc" id="L91">        phoneSearchRepository.save(result);</span>
+<span class="nc" id="L92">        return ResponseEntity.ok()</span>
+<span class="nc" id="L93">            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, phone.getId().toString()))</span>
+<span class="nc" id="L94">            .body(result);</span>
+    }
+
+    /**
+     * {@code GET  /phones} : get all the phones.
+     *
+
+     * @param pageable the pagination information.
+
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of phones in body.
+     */
+    @GetMapping(&quot;/phones&quot;)
+    public ResponseEntity&lt;List&lt;Phone&gt;&gt; getAllPhones(Pageable pageable) {
+<span class="nc" id="L107">        log.debug(&quot;REST request to get a page of Phones&quot;);</span>
+<span class="nc" id="L108">        Page&lt;Phone&gt; page = phoneRepository.findAll(pageable);</span>
+<span class="nc" id="L109">        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);</span>
+<span class="nc" id="L110">        return ResponseEntity.ok().headers(headers).body(page.getContent());</span>
+    }
+
+    /**
+     * {@code GET  /phones/:id} : get the &quot;id&quot; phone.
+     *
+     * @param id the id of the phone to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the phone, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping(&quot;/phones/{id}&quot;)
+    public ResponseEntity&lt;Phone&gt; getPhone(@PathVariable Long id) {
+<span class="nc" id="L121">        log.debug(&quot;REST request to get Phone : {}&quot;, id);</span>
+<span class="nc" id="L122">        Optional&lt;Phone&gt; phone = phoneRepository.findById(id);</span>
+<span class="nc" id="L123">        return ResponseUtil.wrapOrNotFound(phone);</span>
+    }
+
+    /**
+     * {@code DELETE  /phones/:id} : delete the &quot;id&quot; phone.
+     *
+     * @param id the id of the phone to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping(&quot;/phones/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deletePhone(@PathVariable Long id) {
+<span class="nc" id="L134">        log.debug(&quot;REST request to delete Phone : {}&quot;, id);</span>
+<span class="nc" id="L135">        phoneRepository.deleteById(id);</span>
+<span class="nc" id="L136">        phoneSearchRepository.deleteById(id);</span>
+<span class="nc" id="L137">        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();</span>
+    }
+
+    /**
+     * {@code SEARCH  /_search/phones?query=:query} : search for the phone corresponding
+     * to the query.
+     *
+     * @param query the query of the phone search.
+     * @param pageable the pagination information.
+     * @return the result of the search.
+     */
+    @GetMapping(&quot;/_search/phones&quot;)
+    public ResponseEntity&lt;List&lt;Phone&gt;&gt; searchPhones(@RequestParam String query, Pageable pageable) {
+<span class="nc" id="L150">        log.debug(&quot;REST request to search for a page of Phones for query {}&quot;, query);</span>
+<span class="nc" id="L151">        Iterable&lt;Phone&gt; dummy = phoneSearchRepository.findAll(pageable.getSort());</span>
+<span class="nc" id="L152">        log.debug(&quot;=======&quot;+simpleQueryStringQuery(query)+&quot;======&quot;);</span>
+<span class="nc" id="L153">        dummy.forEach(System.out::println);</span>
+<span class="nc" id="L154">        Page&lt;Phone&gt; page = phoneSearchRepository.search(simpleQueryStringQuery(query), pageable);</span>
+<span class="nc" id="L155">        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);</span>
+//        this.getAllPhones(pageable);
+//        log.debug(&quot;////////&quot;+pageable.toString()+&quot;//////&quot;);
+<span class="nc" id="L158">        return ResponseEntity.ok().headers(headers).body(page.getContent());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ElasticsearchConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Example Search</a> &gt; <a href="index.source.html" class="el_package">com.example.search.config</a> &gt; <span class="el_source">ElasticsearchConfiguration.java</span></div><h1>ElasticsearchConfiguration.java</h1><pre class="source lang-java linenums">package com.example.search.config;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
+import com.github.vanroy.springdata.jest.mapper.DefaultJestResultsMapper;
+import io.searchbox.client.JestClient;
+import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.EntityMapper;
+import org.springframework.data.elasticsearch.core.convert.ElasticsearchConverter;
+import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchMappingContext;
+
+import java.io.IOException;
+
+@Configuration
+@EnableConfigurationProperties(ElasticsearchProperties.class)
+public class ElasticsearchConfiguration {
+
+    private ObjectMapper mapper;
+
+<span class="nc" id="L27">    public ElasticsearchConfiguration(ObjectMapper mapper) {</span>
+<span class="nc" id="L28">        this.mapper = mapper;</span>
+<span class="nc" id="L29">    }</span>
+
+    @Bean
+    public EntityMapper getEntityMapper() {
+<span class="nc" id="L33">        return new CustomEntityMapper(mapper);</span>
+    }
+
+    @Bean
+    @Primary
+    public ElasticsearchOperations elasticsearchTemplate(final JestClient jestClient,
+                                                         final ElasticsearchConverter elasticsearchConverter,
+                                                         final SimpleElasticsearchMappingContext simpleElasticsearchMappingContext,
+                                                         EntityMapper mapper) {
+<span class="nc" id="L42">        return new JestElasticsearchTemplate(</span>
+            jestClient,
+            elasticsearchConverter,
+            new DefaultJestResultsMapper(simpleElasticsearchMappingContext, mapper));
+    }
+
+    public class CustomEntityMapper implements EntityMapper {
+
+        private ObjectMapper objectMapper;
+
+<span class="nc" id="L52">        public CustomEntityMapper(ObjectMapper objectMapper) {</span>
+<span class="nc" id="L53">            this.objectMapper = objectMapper;</span>
+<span class="nc" id="L54">            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);</span>
+<span class="nc" id="L55">            objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);</span>
+<span class="nc" id="L56">            objectMapper.configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, true);</span>
+<span class="nc" id="L57">            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, false);</span>
+<span class="nc" id="L58">            objectMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, true);</span>
+<span class="nc" id="L59">        }</span>
+
+        @Override
+        public String mapToString(Object object) throws IOException {
+<span class="nc" id="L63">            return objectMapper.writeValueAsString(object);</span>
+        }
+
+        @Override
+        public &lt;T&gt; T mapToObject(String source, Class&lt;T&gt; clazz) throws IOException {
+<span class="nc" id="L68">            return objectMapper.readValue(source, clazz);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
