@@ -126,5 +126,6 @@
   "jestSonar": {
     "reportPath": "target/test-results/jest",
     "reportFile": "TESTS-results-sonar.xml"
-  }
+  },
+  "cibuild": "ng-test --single-run --c && ng build --prod --no-progress"
 }
