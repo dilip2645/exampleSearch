@@ -111,6 +111,7 @@
     "start-tls": "npm run webpack:dev -- --env.tls",
     "serve": "npm run start",
     "build": "npm run webpack:prod",
+	"cibuild": "ng-test --single-run --c && ng build --prod --no-progress",
     "test": "npm run lint && jest --coverage --logHeapUsage -w=2 --config src/test/javascript/jest.conf.js",
     "test:watch": "npm run test -- --watch",
     "webpack:dev": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --inline --hot --port=9060 --watch-content-base --env.stats=minimal",
@@ -126,6 +127,6 @@
   "jestSonar": {
     "reportPath": "target/test-results/jest",
     "reportFile": "TESTS-results-sonar.xml"
-  },
-  "cibuild": "ng-test --single-run --c && ng build --prod --no-progress"
+  }
+  
 }
